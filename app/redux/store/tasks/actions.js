@@ -13,7 +13,6 @@ export const handleNewTask = (item, request) => {
                     },
                 });
             case "delete":
-                console.log("called, delete");
                 return dispatch({
                     type: DELETE_TASK,
                     payload: {

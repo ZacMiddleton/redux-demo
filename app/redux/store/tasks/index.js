@@ -4,8 +4,7 @@ const initialState = {
   tasks: [],
 };
 
-export default function TaskReducer(state = initialState, action) {
-    console.log(action.payload);
+export default function deleteReducer(state = initialState, action) {
   switch (action.type) {
     case ADD_TASK:
       return {
