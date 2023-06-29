@@ -5,7 +5,6 @@ export const handleNewTask = (item, request) => {
     return (dispatch) => {
         switch(request) {
             case "add":
-                console.log("add")
                 return dispatch({
                     type: ADD_TASK,
                     payload: {
@@ -14,6 +13,7 @@ export const handleNewTask = (item, request) => {
                     },
                 });
             case "delete":
+                console.log("called, delete");
                 return dispatch({
                     type: DELETE_TASK,
                     payload: {

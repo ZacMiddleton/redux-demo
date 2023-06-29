@@ -9,7 +9,7 @@ export default function completedReducer(state = initialState, action) {
         case ADD_TO_COMPLETED:
             return {
                 ...state,
-                completed: [...state.completed, ...action.payload]
+                completed: [...state.completed, action.payload]
             }
         default:
             return state;
