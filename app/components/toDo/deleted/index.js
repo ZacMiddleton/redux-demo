@@ -11,8 +11,8 @@ export default function Deleted() {
   const deletedTasks = deleted.deleted;
 
   const handleClick = (task) => {
-    dispatch(handleNewTask(task.name, 'add'));
-    dispatch(handleDeleted(task, 'delete'));
+    dispatch(handleNewTask(task.name, "add"));
+    dispatch(handleDeleted(task, "delete"));
   };
 
   return (

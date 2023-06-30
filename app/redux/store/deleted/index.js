@@ -1,7 +1,7 @@
 import { ADD_TO_DELETED, REMOVE_FROM_DELETED } from "./actions";
 
 const initialState = {
-    deleted: [],
+  deleted: [],
 };
 
 export default function deleteReducer(state = initialState, action) {
@@ -11,11 +11,11 @@ export default function deleteReducer(state = initialState, action) {
         ...state,
         deleted: [...state.deleted, action.payload],
       };
-      case REMOVE_FROM_DELETED:
-        return {
-            ...state,
-            deleted: state.deleted.filter(task => task.id !== action.payload.id),
-        }
+    case REMOVE_FROM_DELETED:
+      return {
+        ...state,
+        deleted: state.deleted.filter((task) => task.id !== action.payload.id),
+      };
     default:
       return state;
   }
