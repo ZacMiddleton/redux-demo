@@ -1,20 +1,20 @@
-export const ADD_TASK = "ADD_TASK";
-export const DELETE_TASK = "DELETE_TASK";
+export const ADD_TO_DELETED = "ADD_TO_DELETED";
+export const REMOVE_FROM_DELETED = "REMOVE_FROM_DELETED";
 
-export const handleNewTask = (item, request) => {
+export const handleDeleted = (item, request) => {
   return (dispatch) => {
     switch (request) {
       case "add":
         return dispatch({
-          type: ADD_TASK,
+          type: ADD_TO_DELETED,
           payload: {
-            name: item,
-            id: Math.floor(Math.random() * 10000),
+            name: item.name,
+            id: item.id,
           },
         });
       case "delete":
         return dispatch({
-          type: DELETE_TASK,
+          type: REMOVE_FROM_DELETED,
           payload: {
             id: item.id,
           },
