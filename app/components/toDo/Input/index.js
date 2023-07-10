@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { handleNewTask } from "@/app/redux/store/tasks/actions";
+import { handleNewTask } from "@/app/redux/store/ItemActions";
 
 export default function Input() {
   const [inputValue, setInputValue] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -14,12 +14,15 @@ export default function Input() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(handleNewTask(inputValue, "add"))
+    dispatch(handleNewTask({ item: inputValue, request: "add" }));
     setInputValue("");
-  }
+  };
 
   return (
-    <form className="min-w-full flex justify-center p-8" onSubmit={handleSubmit}>
+    <form
+      className="min-w-full flex justify-center p-8"
+      onSubmit={handleSubmit}
+    >
       <input type="text" value={inputValue} onChange={handleChange} />
     </form>
   );

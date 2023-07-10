@@ -1,24 +1,17 @@
 "use client";
 
-import { handleCompleted } from "@/app/redux/store/completed/actions";
-import { handleDeleted } from "@/app/redux/store/deleted/actions";
+import { handleCompleted, handleDeleted } from "@/app/redux/store/ItemActions";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Completed() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
-  const completed = useSelector((state) => state.completed);
-
-  useEffect(() => {
-    if (completed) {
-      setLoading(false);
-    }
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const completed = useSelector((state) => state.taskHandlerReducer.completed);
 
   const handleClick = (task) => {
-    dispatch(handleCompleted(task, "delete"));
-    dispatch(handleDeleted(task, "add"));
+    dispatch(handleCompleted({item: task, request: "delete"}));
+    dispatch(handleDeleted({item: task, request: "add"}));
   };
 
   const completedList = completed.completed;
@@ -29,7 +22,7 @@ export default function Completed() {
       {!loading && (
         <div>
           <ul>
-            {completedList.map((item) => (
+            {completed.map((item) => (
               <li key={item.id} className="pl-5">
                 <h2 className="text-lg">{item.name}</h2>
                 <button

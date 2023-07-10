@@ -1,30 +1,26 @@
 "use client";
 import { useSelector, useDispatch } from "react-redux";
-import { handleNewTask } from "@/app/redux/store/tasks/actions";
-import { handleDeleted } from "@/app/redux/store/deleted/actions";
 import { useEffect, useState } from "react";
-import { handleCompleted } from "@/app/redux/store/completed/actions";
+import {
+  handleCompleted,
+  handleDeleted,
+  handleNewTask,
+} from "@/app/redux/store/ItemActions";
 
 export default function Main() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const tasks = useSelector((state) => state.tasks);
+  const tasks = useSelector((state) => state.taskHandlerReducer.tasks);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (tasks) {
-      setLoading(false);
-    }
-  }, []);
-
   const handleDelete = (task) => {
-    dispatch(handleNewTask(task, "delete"));
-    dispatch(handleDeleted(task, "add"));
+    dispatch(handleNewTask({item: task.id, request: "delete"}));
+    dispatch(handleDeleted({item: task, request: "add"}));
   };
 
   const handleComplete = (task) => {
-    dispatch(handleCompleted(task, "add"));
-    dispatch(handleNewTask(task, "delete"));
+    dispatch(handleCompleted({ item: task, request: "add" }));
+    dispatch(handleNewTask({ item: task.id, request: "delete" }));
   };
 
   const taskList = tasks?.tasks;
@@ -36,11 +32,16 @@ export default function Main() {
         <div>
           {!loading && (
             <ul>
-              {taskList.map((item) => (
+              {tasks.map((item) => (
                 <li key={item.id} className="pl-10">
                   <h2>{item.name}</h2>
                   <div className="flex mb-5">
-                    <button  onClick={() => handleComplete(item)} className="text-xs mr-5">complete</button>
+                    <button
+                      onClick={() => handleComplete(item)}
+                      className="text-xs mr-5"
+                    >
+                      complete
+                    </button>
                     <button
                       onClick={() => handleDelete(item)}
                       className="text-xs"

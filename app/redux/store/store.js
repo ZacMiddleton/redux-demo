@@ -1,34 +1,37 @@
-import { combineReducers, applyMiddleware } from "redux";
-import { legacy_createStore as createStore } from "redux";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from "redux-persist";
-import thunk from 'redux-thunk';
-import storage from 'redux-persist/lib/storage';
-import tasks from './tasks';
-import completed from './completed';
-import deleted from './deleted';
+import thunk from "redux-thunk";
+import storage from "redux-persist/lib/storage";
 
-const reducers = combineReducers({
-    completed,
-    tasks,
-    deleted,
-});
+import taskHandlerReducer from "../store/ItemActions";
+
+const reducers = {
+  taskHandlerReducer,
+};
 
 let store;
 let persistor;
 
-if (typeof window !== 'undefined') {
-    const persistConfig = {
-        key: 'root',
-        storage,
-        whitelist: ['completed', 'tasks'],
-    };
+if (typeof window !== "undefined") {
+  const persistConfig = {
+    key: "root",
+    storage,
+    whitelist: ["taskHandler"],
+  };
 
-    const persistedReducer = persistReducer(persistConfig, reducers);
-    store = createStore(persistedReducer, applyMiddleware(thunk));
-    persistor = persistStore(store);
+  const rootReducer = combineReducers(reducers);
+  const persistedReducer = persistReducer(persistConfig, rootReducer);
+  store = configureStore({
+    reducer: persistedReducer,
+    middleware: [thunk],
+  });
+  persistor = persistStore(store);
 } else {
-    store = createStore(reducers, applyMiddleware(thunk));
-    persistor = null;
+  store = configureStore({
+    reducer: reducers,
+    middleware: [thunk],
+  });
+  persistor = null;
 }
 
 export { store, persistor };

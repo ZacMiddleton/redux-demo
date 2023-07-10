@@ -1,18 +1,17 @@
 "use client";
 import { list } from "postcss";
 import { useDispatch, useSelector } from "react-redux";
-import { handleNewTask } from "@/app/redux/store/tasks/actions";
-import { handleDeleted } from "@/app/redux/store/deleted/actions";
+import { handleNewTask, handleDeleted } from "@/app/redux/store/ItemActions";
 
 export default function Deleted() {
-  const deleted = useSelector((state) => state.deleted);
+  const deleted = useSelector((state) => state.taskHandlerReducer.deleted);
   const dispatch = useDispatch();
 
   const deletedTasks = deleted.deleted;
 
   const handleClick = (task) => {
-    dispatch(handleNewTask(task.name, "add"));
-    dispatch(handleDeleted(task, "delete"));
+    dispatch(handleNewTask({item: task.name, request: "add"}));
+    dispatch(handleDeleted({item: task, request: "delete"}));
   };
 
   return (
@@ -20,7 +19,7 @@ export default function Deleted() {
       <h1 className="text-center text-lg">Deleted</h1>
       <div>
         <ul>
-          {deletedTasks.map((item) => (
+          {deleted.map((item) => (
             <li key={item.id} className="pl-10 mb-3">
               <h2 className="p-0">{item.name}</h2>
               <button
