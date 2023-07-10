@@ -16,7 +16,7 @@ if (typeof window !== "undefined") {
   const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["taskHandler"],
+    whitelist: ["taskHandlerReducer"],
   };
 
   const rootReducer = combineReducers(reducers);
